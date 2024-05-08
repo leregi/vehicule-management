@@ -3,7 +3,19 @@ version: '3'
 services:
   web:
     build: .
-    volumes:
-      - .:/usr/src/app
     ports:
       - "80:80"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      POSTGRES_HOST: database 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pwd1001 
+      POSTGRES_DB: vehicule 
+  
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pwd1001 
+      POSTGRES_DB: vehicule 
