@@ -1,6 +1,6 @@
-fastapi 
+fastapi[all]
 uvicorn
-pydantic
+pydantic[all]
 alembic
 sqlmodel
 sqlalchemy
