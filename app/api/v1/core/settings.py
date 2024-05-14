@@ -11,8 +11,15 @@ class Settings(BaseSettings):
 
     API_V1_STR: str = "/api/v1"
 
+    DATABASE_HOST: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
+    POSTGRES_PORT: str
+
+
     
-    model_config = SettingsConfigDict(env_file='.env', extra='ignore')
+    model_config = SettingsConfigDict(env_file=('.env/development/database',".env/development/web"), env_file_encoding="utf-8",extra='ignore')
 
 
 settings = Settings()
