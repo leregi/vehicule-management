@@ -1,14 +1,27 @@
 from typing import Union
 from fastapi import FastAPI, HTTPException,status
+from contextlib import asynccontextmanager
 
-from .api.v1.core.settings import settings
 from .basic_response import BasicResponse
+from .api.v1.core.settings import settings
 from .api.v1.routers import router as v1_router
+from .api.v1.core import get_async_session, init_db, drop_db
+
+
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    #on startup
+    init_db()
+    yield
+    #on shutdown
+    drop_db()
+
 
 app = FastAPI(
     title= settings.project_title,
     description=settings.project_description,
-    version=settings.project_version
+    version=settings.project_version,
+    lifespan=lifespan
 )
 
 
