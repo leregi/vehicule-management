@@ -4,8 +4,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from ..schemas.test_schemas import SimplePeopleCreate
 from ..repository.test_repository import TestRepository
-from ..db import get_async_session
-
+from ..db.connection import get_async_session
 
 test_router = APIRouter()
 

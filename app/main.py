@@ -5,16 +5,15 @@ from contextlib import asynccontextmanager
 from .basic_response import BasicResponse
 from .api.v1.core.settings import settings
 from .api.v1.routers import router as v1_router
-from .api.v1.core import get_async_session, init_db, drop_db
-
+from .api.v1.db.connection import drop_db, init_db
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
     #on startup
-    init_db()
+    await init_db()
     yield
     #on shutdown
-    drop_db()
+    await drop_db()
 
 
 app = FastAPI(

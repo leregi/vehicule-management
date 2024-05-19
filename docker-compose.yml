@@ -7,6 +7,7 @@ services:
       - database
     ports:
       - "80:80"
+    restart: always
     volumes:
       - ./:/usr/src/app
     env_file:
@@ -15,5 +16,35 @@ services:
 
   database:
     image: postgres
+    restart: always
+    ports:
+      - 5432:5432
     env_file:
       - .env/development/database
+    environment:
+      POSTGRES_DB: vehicule
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pwd1001
+      POSTGRES_PORT: 5432
+      DATABASE_HOST: database
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - pgsql-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - 5011:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    links:
+      - database:pgsql-server
+
+volumes:
+  pgsql-data:
+  pgadmin-data:

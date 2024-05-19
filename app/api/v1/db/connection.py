@@ -20,10 +20,10 @@ async def drop_db():
     async with async_engine.begin() as postgres_conn:
         await postgres_conn.run_sync(SQLModel.metadata.drop_all)
 
-async def get_async_session()->AsyncSession:
+async def get_async_session():
     async_session = sessionmaker(
        bind=async_engine, class_=AsyncSession, expire_on_commit=False
    )
-    async with async_session as session:
+    async with async_session() as session:
         yield session
 

@@ -40,14 +40,14 @@ class TeamSchema(TeamBase):
     peoples: List[PeopleBase] = []
 
 class DivisionSchema(DivisionBase):
-    people_id: Optional[int]
+    people_id: Optional[int] = None
 
 class NationalCardschema(NationalCardBase):
-    people_id = Optional[int]
+    people_id : Optional[int] = None
 
 
 
 class PeopleSchema(PeopleBase):
     teams: List[TeamBase] = []
     divisions: List[DivisionBase] = []
-    national_card: Optional[int]
+    national_card: Optional[int] = None
