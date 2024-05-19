@@ -1,0 +1,126 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+Table Employee {
+  id integer [primary key]
+  firstname varchar
+  lastname varchar
+  telephone varchar
+  email varchar
+  password varchar
+  department_id integer [ref: > Department.id]
+  created_at timestamp
+}
+
+Table Department {
+  id integer [primary key]
+  department_name varchar
+  created_at timestamp
+}
+
+
+Table Vehicle {
+  id integer [primary key]
+  mark varchar
+  model varchar
+  creation_year integer
+  vin_number varchar
+  number_cylinder integer
+  insurance_exp_date date
+  vignette_exp_date date
+  immatriculation_number varchar
+  created_at timestamp
+}
+Table Licenses {
+  id integer [primary key]
+  driver_id integer [ref: > Drivers.id]
+  licence_number varchar
+  licence_id varchar
+  licence_exp_date date
+  created_at timestamp
+
+}
+
+Table Drivers   {
+  id integer [primary key]
+  firstname varchar
+  lastname varchar
+  email varchar
+  password varchar
+  telephone varchar
+  licence_id integer [ref: > Licenses.id]
+  created_at timestamp
+}
+
+Table Request {
+  id integer [primary key]
+  requester_id integer [ref: > Employee.id]
+  is_requester_passenger boolean
+  trip_date date
+  trip_title varchar
+  trip_description text
+  start_hour time
+  arrival_hour time
+  status varchar 
+  non_approval_reason text
+  created_at timestamp
+}
+
+Table AdditionalPassenger {
+  id integer [primary key]
+  request_id integer [ref: > Request.id]
+  employee_id integer [ref: > Employee.id]
+}
+
+Table RequesTripPoint {
+  id integer [primary key]
+  request_id integer [ref: > Request.id]
+  point_type varchar 
+  latitude decimal
+  longitude decimal
+}
+
+
+
+Table Trip {
+  id integer [primary key]
+  request_id integer [ref: > Request.id]
+  driver_id integer [ref: > Drivers.id]
+  start_time timestamp
+  finish_time timestamp
+  start_point_id integer [ref: > TripPoint.id]
+  finish_point_id integer [ref: > TripPoint.id]
+  start_odometer_km decimal
+  finish_odometer_km decimal
+  distance_traveled_km decimal
+  trip_duration interval
+  status varchar
+  created_at timestamp
+}
+
+Table TripPoint {
+  id integer [primary key]
+  latitude decimal
+  longitude decimal
+}
+
+
+Table TripRating {
+  id integer [primary key]
+  trip_id integer [ref: > Trip.id]
+  passenger_id integer [ref: > Employee.id]
+  rating integer 
+  testimony text
+  created_at timestamp
+}
+
+
+
+
+
+
+
+
+
+
