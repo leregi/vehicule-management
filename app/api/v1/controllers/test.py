@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from typing import Union
-from sqlmodel.ext.asyncio import AsyncSession
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from ..schemas.test_schemas import SimplePeopleCreate
 from ..repository.test_repository import TestRepository
@@ -9,9 +9,9 @@ from ..db import get_async_session
 
 test_router = APIRouter()
 
-@test_router.post("/"
+@test_router.post("/",
     response_model=SimplePeopleCreate,
-    status_code=status.HTTP_200_OK                  
+    status_code=status.HTTP_200_OK  ,                
 )
 async def add_test(simple_people:SimplePeopleCreate, session:AsyncSession = Depends(get_async_session)):
     simple_people_data = simple_people.model_dump()

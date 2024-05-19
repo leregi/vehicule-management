@@ -1,15 +1,15 @@
 from sqlmodel import Field, SQLModel, Relationship
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional,List
 
 # Many to Many
 class PeopleTeam(SQLModel,table=True):
     people_id: Optional[int] = Field(default=None, foreign_key="people.id",primary_key=True)
     team_id: Optional[int] = Field(default=None, foreign_key="team.id",primary_key=True)
-    created_at:Optional[datetime] = Field(default_factory=datetime.UTC)
+    created_at:datetime = Field(default_factory=datetime.now(tz=timezone.utc))
     updated_at:Optional[datetime] = Field(
-                                            default_factory=datetime.UTC,
-                                            sa_column_kwargs={"onupdate": datetime.UTC}
+                                            default_factory=datetime.now(tz=timezone.utc),
+                                            sa_column_kwargs={"onupdate": datetime.now(tz=timezone.utc)}
                                         )
 
 class People(SQLModel, table=True):
@@ -26,23 +26,24 @@ class People(SQLModel, table=True):
     # Many to Many
     teams:List["Team"] =Relationship(back_populates="peoples",link_model=PeopleTeam)
     # TimeStamp
-    created_at:Optional[datetime] = Field(default_factory=datetime.UTC)
-    updated_at:Optional[datetime] = Field(default_factory=datetime.UTC,
-                                            sa_column_kwargs={"onupdate": datetime.UTC}
+    created_at:datetime = Field(default_factory=datetime.now(tz=timezone.utc))
+    updated_at:Optional[datetime] = Field(default_factory=datetime.now(tz=timezone.utc),
+                                            sa_column_kwargs={"onupdate": datetime.now(tz=timezone.utc)}
                                         )
+
 
 # one to one relationships
 class NationalCard(SQLModel,table=True):
     id: int = Field(primary_key=True,nullable=False)
     cin: str = Field(unique=True)
     # People has one National Card
-    people_id:Optional[int] = Field(default=None,foreign_key="people.id")
+    people_id:Optional[int] = Field(default=None,foreign_key="people.id", unique=True)
     people: Optional['People'] = Relationship(back_populates="national_card")
         # TimeStamp
-    created_at:Optional[datetime] = Field(default_factory=datetime.UTC)
+    created_at:datetime = Field(default_factory=datetime.now(tz=timezone.utc))
     updated_at:Optional[datetime] = Field(
-                                            default_factory=datetime.UTC,
-                                            sa_column_kwargs={"onupdate": datetime.UTC}
+                                            default_factory=datetime.now(tz=timezone.utc),
+                                            sa_column_kwargs={"onupdate": datetime.now(tz=timezone.utc)}
                                         )
 
 # one to many relationships
@@ -53,10 +54,10 @@ class Division(SQLModel,table=True):
     people_id:Optional[int] = Field(default=None,foreign_key="people.id")
     people:Optional["People"] = Relationship(back_populates="divisions")
     # TimeStamp
-    created_at:Optional[datetime] = Field(default_factory=datetime.UTC)
+    created_at:datetime = Field(default_factory=datetime.now(tz=timezone.utc))
     updated_at:Optional[datetime] = Field(
-                                            default_factory=datetime.UTC,
-                                            sa_column_kwargs={"onupdate": datetime.UTC}
+                                            default_factory=datetime.now(tz=timezone.utc),
+                                            sa_column_kwargs={"onupdate": datetime.now(tz=timezone.utc)}
                                         )
 
 # many to many relationship
@@ -66,9 +67,9 @@ class Team(SQLModel,table=True):
     # many to many
     peoples:Optional["People"] = Relationship(back_populates="teams",link_model=PeopleTeam)
     # TimeStamp
-    created_at:Optional[datetime] = Field(default_factory=datetime.UTC)
+    created_at:datetime = Field(default_factory=datetime.now(tz=timezone.utc))
     updated_at:Optional[datetime] = Field(
-                                            default_factory=datetime.UTC,
-                                            sa_column_kwargs={"onupdate": datetime.UTC}
+                                            default_factory=datetime.now(tz=timezone.utc),
+                                            sa_column_kwargs={"onupdate": datetime.now(tz=timezone.utc)}
                                         )
 

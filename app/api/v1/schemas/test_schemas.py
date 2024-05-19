@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel
 from pydantic import EmailStr, ConfigDict
+from typing import List, Optional
 
 
 class PeopleBase(SQLModel):
@@ -20,5 +21,33 @@ class TeamBase(SQLModel):
     name:str
 
 
+# simple
 class SimplePeopleCreate(PeopleBase):
     pass
+
+
+class SimpleNationalCard(NationalCardBase):
+    pass
+
+class SimpleDivision(DivisionBase):
+    pass
+
+class SimpleTeam(TeamBase):
+    pass
+
+# with relationships
+class TeamSchema(TeamBase):
+    peoples: List[PeopleBase] = []
+
+class DivisionSchema(DivisionBase):
+    people_id: Optional[int]
+
+class NationalCardschema(NationalCardBase):
+    people_id = Optional[int]
+
+
+
+class PeopleSchema(PeopleBase):
+    teams: List[TeamBase] = []
+    divisions: List[DivisionBase] = []
+    national_card: Optional[int]
