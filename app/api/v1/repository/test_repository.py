@@ -1,4 +1,4 @@
-from sqlmodel.ext.asyncio import AsyncSession
+from sqlmodel.ext.asyncio.session import AsyncSession
 from ..models.test_mod import People
 
 
@@ -9,3 +9,10 @@ class TestRepository():
         session.add(simple_people)
         session.commit()
         return simple_people
+    
+    # people -> national_card (CRUD)
+
+
+    # people -< divisions (CRUD)
+
+    # peoples >-< teams (CRUD)
