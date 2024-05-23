@@ -8,32 +8,32 @@ class TestRepository():
     async def create_simple_people(session:AsyncSession,data):
         simple_people = People(fullname=data["fullname"],email=data["email"])
         session.add(simple_people)
-        session.commit()
+        await session.commit()
         await session.refresh(simple_people)
         return simple_people
     
-    # people -> national_card (CRUD)
-
-
-    # people -< divisions (CRUD)
-
-    # peoples >-< teams (CRUD)
     @staticmethod
-    async def create_people_with_teams(session:AsyncSession,data):
-        people_and_teams = People(
-            fullname= data.fullname,
-            email= data.email,
-            teams= [Team(name=data.name) for data in data.teams]        
-        )
-        session.add(people_and_teams)
-        session.commit()
-        session.refresh(people_and_teams)
-        return people_and_teams
-
+    async def create_simple_team(session:AsyncSession,data):
+        simple_team = Team(name=data["name"])
+        session.add(simple_team)
+        await session.commit()
+        await session.refresh(simple_team)
+        return simple_team
+    
     @staticmethod
-    async def update_people_teams(session:AsyncSession, data):
-        people = session.exec(
-            select(People).where(People.id == data.people_id)
-        ).first()
+    async def get_simple_people(session:AsyncSession):
+        get_all_statement = select(People)
+        exec_all = await session.exec(get_all_statement)
+        simple_people_all = exec_all.all()
+        return simple_people_all
+    
+    @staticmethod
+    async def get_simple_team(session:AsyncSession):
+        get_all_statement = select(Team)
+        texec_all = await session.exec(get_all_statement)
+        simple_team_all = texec_all.all()
+        return simple_team_all
+
+    
 
 

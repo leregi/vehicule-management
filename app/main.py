@@ -12,8 +12,9 @@ async def lifespan(app:FastAPI):
     #on startup
     await init_db()
     yield
+    print("SHUTDOWN")
     #on shutdown
-    await drop_db()
+    #await drop_db()
 
 
 app = FastAPI(
