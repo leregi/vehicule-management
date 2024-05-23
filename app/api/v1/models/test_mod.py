@@ -31,7 +31,7 @@ class NationalCard(SQLModel,table=True):
     cin: str = Field(unique=True)
     # People has one National Card
     people_id:Optional[int] = Field(default=None,foreign_key="people.id", unique=True)
-    people: Optional['People'] = Relationship(back_populates="national_card")
+    people: Optional['People'] = Relationship(back_populates="national_card", sa_relationship_kwargs={'lazy': 'selectin'})
         # TimeStamp
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
@@ -53,7 +53,7 @@ class Division(SQLModel,table=True):
     name:str
     # People has many division
     people_id:Optional[int] = Field(default=None,foreign_key="people.id")
-    people:Optional["People"] = Relationship(back_populates="divisions")
+    people:Optional["People"] = Relationship(back_populates="divisions",sa_relationship_kwargs={'lazy': 'selectin'})
     # TimeStamp
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
@@ -74,7 +74,7 @@ class Team(SQLModel,table=True):
     id:int = Field(nullable=False, primary_key=True)
     name:str
     # many to many
-    peoples:Optional["People"] = Relationship(back_populates="teams",link_model=PeopleTeam)
+    peoples:Optional["People"] = Relationship(back_populates="teams",link_model=PeopleTeam,sa_relationship_kwargs={'lazy': 'selectin'})
     # TimeStamp
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
@@ -104,13 +104,16 @@ class People(SQLModel, table=True):
     email:str = Field(unique=True)
     # People has one National Card
     national_card:Optional[NationalCard] = Relationship(
-        sa_relationship_kwargs={'uselist': False},
-        back_populates="people"
+        sa_relationship_kwargs={
+            'uselist': False,
+            'lazy': 'selectin'
+        },
+        back_populates="people"    
     )
     # People has many Division
-    divisions:List[Division] = Relationship(back_populates="people")
+    divisions:List[Division] = Relationship(back_populates="people",sa_relationship_kwargs={'lazy': 'selectin'})
     # Many to Many
-    teams:List[Team] =Relationship(back_populates="peoples",link_model=PeopleTeam)
+    teams:List[Team] =Relationship(back_populates="peoples",link_model=PeopleTeam,sa_relationship_kwargs={'lazy': 'selectin'})
     # TimeStamp
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)

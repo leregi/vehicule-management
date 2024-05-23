@@ -37,17 +37,17 @@ class SimpleTeam(TeamBase):
 
 # with relationships
 class TeamSchema(TeamBase):
-    peoples: List[PeopleBase] = []
-
-class DivisionSchema(DivisionBase):
-    people_id: Optional[int] = None
-
-class NationalCardschema(NationalCardBase):
-    people_id : Optional[int] = None
-
+    peoples: List[PeopleBase]
 
 
 class PeopleSchema(PeopleBase):
-    teams: List[TeamBase] = []
-    divisions: List[DivisionBase] = []
-    national_card: Optional[int] = None
+    teams: List[TeamBase]
+    divisions: List[DivisionBase]
+    national_card: Optional[NationalCardBase] = None
+
+
+class DeleteItem(SQLModel):
+    id: int
+    ok: bool = True
+    content: str
+
