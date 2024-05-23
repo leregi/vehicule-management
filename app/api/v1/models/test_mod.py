@@ -5,6 +5,12 @@ from sqlalchemy import func, Column, DateTime
 
 
 
+## people one to one national_card
+## people has many divisions
+## people has many teams through peopeteam and team has many teams through peopleteam
+
+
+
 # Many to Many
 class PeopleTeam(SQLModel,table=True):
     people_id: Optional[int] = Field(default=None, foreign_key="people.id",primary_key=True)
