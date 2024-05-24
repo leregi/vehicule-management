@@ -3,6 +3,8 @@ from datetime import datetime, timezone
 from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 
+from .department import Departement
+
 class Employee(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
     first_name:str
@@ -22,3 +24,5 @@ class Employee(SQLModel, table=True):
             DateTime(timezone=True), onupdate=func.now(), nullable=True
         )
     )
+    department_id: Optional[int] = Field(default=None,foreign_key="departement.id")
+    department:Optional[Departement] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'})
