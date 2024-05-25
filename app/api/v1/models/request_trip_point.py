@@ -2,21 +2,17 @@ from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime, timezone
 from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
+from decimal import Decimal
 
-from .department import Departement
 from .request import Request
-from .additional_passenger import AdditionalPassenger
 
-class Employee(SQLModel, table=True):
+class RequestTripPoint(SQLModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
-    first_name:str
-    last_name:str
-    telephone:str = Field(unique=True)
-    email:str = Field(unique=True)
-    department_id: Optional[int] = Field(default=None,foreign_key="departement.id")
-    department:Optional[Departement] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'})
-    #requests:List[Request] = Relationship(back_populates="employee",sa_relationship_kwargs={'lazy': 'selectin'})
-    requests:List[Request] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=AdditionalPassenger)
+    point_type: str
+    latitude:Decimal = Field(default=0, max_digits=8, decimal_places=6)
+    longitude:Decimal= Field(default=0, max_digits=9, decimal_places=6)
+    request_id: Optional[int] = Field(default=None,foreign_key="request.id")
+    request:Optional[Request] = Relationship(back_populates="request_trip_points",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -30,4 +26,4 @@ class Employee(SQLModel, table=True):
             DateTime(timezone=True), onupdate=func.now(), nullable=True
         )
     )
-    
+

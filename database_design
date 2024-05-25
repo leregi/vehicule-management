@@ -20,7 +20,7 @@ Table Department {
 }
 
 
-Table Vehicle {
+Table Vehicule {
   id integer [primary key]
   mark varchar
   model varchar
@@ -55,7 +55,7 @@ Table Drivers   {
 
 Table Request {
   id integer [primary key]
-  requester_id integer [ref: > Employee.id]
+  //requester_id integer [ref: > Employee.id]
   is_requester_passenger boolean
   trip_date date
   trip_title varchar
@@ -87,6 +87,7 @@ Table Trip {
   id integer [primary key]
   request_id integer [ref: > Request.id]
   driver_id integer [ref: > Drivers.id]
+  vehicule_id integer [ref: > Vehicule.id]
   start_time timestamp
   finish_time timestamp
   start_point_id integer [ref: > TripPoint.id]

@@ -80,7 +80,7 @@ class Team(SQLModel,table=True):
     id:int = Field(nullable=False, primary_key=True)
     name:str
     # many to many
-    peoples:Optional["People"] = Relationship(back_populates="teams",link_model=PeopleTeam,sa_relationship_kwargs={'lazy': 'selectin'})
+    peoples:List["People"] = Relationship(back_populates="teams",link_model=PeopleTeam,sa_relationship_kwargs={'lazy': 'selectin'})
     # TimeStamp
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)

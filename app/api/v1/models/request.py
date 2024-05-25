@@ -4,6 +4,9 @@ from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 
 from .employee import Employee
+from .additional_passenger import AdditionalPassenger
+from .request_trip_point import RequestTripPoint
+
 
 class Request(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
@@ -15,8 +18,10 @@ class Request(SQLModel, table=True):
     arrival_hour:datetime
     status:str
     non_approval_reason: str
-    employee_id: Optional[int] = Field(default=None,foreign_key="employee.id")
-    employee:Optional[Employee] = Relationship(back_populates="requests",sa_relationship_kwargs={'lazy': 'selectin'})
+    #employee_id: Optional[int] = Field(default=None,foreign_key="employee.id")
+    #employee:Optional[Employee] = Relationship(back_populates="requests",sa_relationship_kwargs={'lazy': 'selectin'})
+    employees:List[Employee] = Relationship(back_populates="requests",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=AdditionalPassenger)
+    request_trip_points:list[RequestTripPoint] = Relationship(back_populates="request",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
