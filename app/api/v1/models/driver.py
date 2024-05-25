@@ -2,10 +2,19 @@ from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime, timezone
 from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
+from decimal import Decimal
 
-class AdditionalPassenger(SQLModel,table=True):
-    request_id: Optional[int] = Field(default=None, foreign_key="request.id",primary_key=True)
-    employee_id: Optional[int] = Field(default=None, foreign_key="employee.id",primary_key=True)
+from .licence import Licence
+from .driver_licence import DriverLicence
+
+class Driver(SQLModel,table=True):
+    id:Optional[int] = Field(default=None,primary_key=True)
+    firstname:str
+    lastname: str
+    email:str = Field(unique=True)
+    password:str
+    telephone:str
+    licences: List[Licence] = Relationship(back_populates="drivers",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=DriverLicence)
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
