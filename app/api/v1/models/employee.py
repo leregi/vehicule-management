@@ -4,6 +4,7 @@ from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 
 from .department import Departement
+from .request import Request
 
 class Employee(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
@@ -11,6 +12,9 @@ class Employee(SQLModel, table=True):
     last_name:str
     telephone:str = Field(unique=True)
     email:str = Field(unique=True)
+    department_id: Optional[int] = Field(default=None,foreign_key="departement.id")
+    department:Optional[Departement] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'})
+    requests:List[Request] = Relationship(back_populates="employee",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -24,5 +28,4 @@ class Employee(SQLModel, table=True):
             DateTime(timezone=True), onupdate=func.now(), nullable=True
         )
     )
-    department_id: Optional[int] = Field(default=None,foreign_key="departement.id")
-    department:Optional[Departement] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'})
+    

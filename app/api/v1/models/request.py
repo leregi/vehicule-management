@@ -5,11 +5,18 @@ from sqlalchemy import func, Column, DateTime
 
 from .employee import Employee
 
-class Departement(SQLModel, table=True):
+class Request(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
-    department_name:str = Field(unique=True)
-    # Departement has many employee
-    employees:List[Employee] = Relationship(back_populates="departement",sa_relationship_kwargs={'lazy': 'selectin'})
+    is_requester_messenger: Optional[bool] =  Field(default=None)
+    trip_date:datetime
+    trip_title: str
+    trip_description:str
+    start_hour:datetime
+    arrival_hour:datetime
+    status:str
+    non_approval_reason: str
+    employee_id: Optional[int] = Field(default=None,foreign_key="employee.id")
+    employee:Optional[Employee] = Relationship(back_populates="requests",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -23,4 +30,3 @@ class Departement(SQLModel, table=True):
             DateTime(timezone=True), onupdate=func.now(), nullable=True
         )
     )
-    
