@@ -6,12 +6,12 @@ from decimal import Decimal
 from sqlalchemy.dialects.postgresql import INTERVAL
 from sqlalchemy import Column
 
-from .vehicule import Vehicule
-from .starting_trip_point import StartingTripPoint
-from .end_trip_point import EndTripPoint
-from .request import Request
-from .driver import Driver
-from .trip_rating import TripRating
+from .vehicule import Vehicule as Vehicule
+from .starting_trip_point import StartingTripPoint as StartingTripPoint
+from .end_trip_point import EndTripPoint as EndTripPoint
+from .request import Request as Request
+from .driver import Driver as  Driver
+from .trip_rating import TripRating as TripRating
 
 
 class Trip(SQLModel,table=True):

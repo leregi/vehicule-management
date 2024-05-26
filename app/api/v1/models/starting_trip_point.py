@@ -4,7 +4,7 @@ from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 from decimal import Decimal
 
-from .trip import Trip
+from .trip import Trip as Trip
 
 class StartingTripPoint(SQLModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)

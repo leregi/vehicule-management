@@ -4,10 +4,10 @@ from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 from sqlalchemy.dialects.postgresql import TEXT
 
-from .employee import Employee
-from .additional_passenger import AdditionalPassenger
-from .request_trip_point import RequestTripPoint
-from .trip import Trip
+from .employee import Employee as Employee
+from .additional_passenger import AdditionalPassenger as AdditionalPassenger
+from .request_trip_point import RequestTripPoint as RequestTripPoint
+from .trip import Trip as Trip
 
 
 class Request(SQLModel, table=True):

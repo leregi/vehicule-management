@@ -7,10 +7,12 @@ set -x
 # docker-compose exec web alembic init -t async migrations
 
 # run first migration
-docker-compose exec web alembic revision --autogenerate -m "init"
+#docker-compose exec web 
+alembic revision --autogenerate -m "init"
 
 # run migrations upword
-docker-compose exec web alembic upgrade head
+#docker-compose exec web 
+alembic upgrade head
 
 # run migrations backword
 #

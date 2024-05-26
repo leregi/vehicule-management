@@ -4,8 +4,8 @@ from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 from decimal import Decimal
 
-from .driver import Driver
-from .driver_licence import DriverLicence
+from .driver import Driver as Driver
+from .driver_licence import DriverLicence as DriverLicence
 
 class Licence(SQLModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)

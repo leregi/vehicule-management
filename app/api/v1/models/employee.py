@@ -3,10 +3,10 @@ from datetime import datetime, timezone
 from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 
-from .department import Departement
-from .request import Request
-from .additional_passenger import AdditionalPassenger
-from .trip_rating import TripRating
+from .department import Departement as Departement
+from .request import Request as Request
+from .additional_passenger import AdditionalPassenger as AdditionalPassenger
+from .trip_rating import TripRating as TripRating
 
 class Employee(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)

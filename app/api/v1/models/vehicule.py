@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 
-from .trip import Trip
+from .trip import Trip as Trip
 
 class Vehicule(SQLModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)

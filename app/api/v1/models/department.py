@@ -3,7 +3,11 @@ from datetime import datetime, timezone
 from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 
-from .employee import Employee
+from importlib import import_module
+
+from .employee import Departement  
+#emp = import_module("./employee")
+#Employee = emp.Employee
 
 class Departement(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)

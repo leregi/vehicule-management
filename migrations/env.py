@@ -12,6 +12,7 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
+
 #from app.api.v1.models.test_mod import People, PeopleTeam, Team, Division, NationalCard
 from app.api.v1.models.additional_passenger import *
 from app.api.v1.models.department import *

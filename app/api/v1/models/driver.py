@@ -4,9 +4,9 @@ from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 from decimal import Decimal
 
-from .licence import Licence
-from .driver_licence import DriverLicence
-from .trip import Trip
+from .licence import Licence as lic
+from .driver_licence import DriverLicence as dl
+from .trip import Trip as t
 
 class Driver(SQLModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
@@ -15,8 +15,8 @@ class Driver(SQLModel,table=True):
     email:str = Field(unique=True)
     password:str
     telephone:str
-    licences: List[Licence] = Relationship(back_populates="drivers",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=DriverLicence)
-    trips: List[Trip] = Relationship(back_populates="driver",sa_relationship_kwargs={'lazy': 'selectin'})
+    licences: List[lic.Licence] = Relationship(back_populates="drivers",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=dl.DriverLicence)
+    trips: List[t.Trip] = Relationship(back_populates="driver",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(

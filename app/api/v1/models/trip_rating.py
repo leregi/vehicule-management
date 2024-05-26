@@ -6,8 +6,8 @@ from decimal import Decimal
 from sqlalchemy.dialects.postgresql import TEXT
 from sqlalchemy import Column
 
-from .trip import Trip
-from .employee import Employee
+from .trip import Trip as Trip
+from .employee import Employee as Employee
 
 class TripRating(SQLModel,table=True):
     id:Optional[int] = Field(default=None, primary_key=True)
