@@ -13,6 +13,7 @@ class RequestTripPoint(SQLModel,table=True):
     longitude:Decimal= Field(default=0, max_digits=9, decimal_places=6)
     request_id: Optional[int] = Field(default=None,foreign_key="request.id")
     request:Optional[Request] = Relationship(back_populates="request_trip_points",sa_relationship_kwargs={'lazy': 'selectin'})
+    
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(

@@ -6,6 +6,7 @@ from sqlalchemy import func, Column, DateTime
 from .department import Departement
 from .request import Request
 from .additional_passenger import AdditionalPassenger
+from .trip_rating import TripRating
 
 class Employee(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
@@ -15,7 +16,7 @@ class Employee(SQLModel, table=True):
     email:str = Field(unique=True)
     department_id: Optional[int] = Field(default=None,foreign_key="departement.id")
     department:Optional[Departement] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'})
-    #requests:List[Request] = Relationship(back_populates="employee",sa_relationship_kwargs={'lazy': 'selectin'})
+    trip_ratings:List[TripRating] = Relationship(back_populates="employee",sa_relationship_kwargs={'lazy': 'selectin'})
     requests:List[Request] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=AdditionalPassenger)
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)

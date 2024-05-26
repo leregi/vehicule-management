@@ -24,9 +24,9 @@ services:
       POSTGRES_PASSWORD: pwd1001
       POSTGRES_PORT: 5432
       DATABASE_HOST: database
-    #  PGDATA: /var/lib/postgresql/data
-    #volumes:
-    #  - pgsql-data:/var/lib/postgresql/data
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - pgsql-data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -37,10 +37,10 @@ services:
       PGADMIN_LISTEN_PORT: 80
     ports:
       - 5011:80
-    #volumes:
-    #  - pgadmin-data:/var/lib/pgadmin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     links:
       - database:pgsql-server
-#volumes:
-#  pgsql-data:
-#  pgadmin-data:
+volumes:
+  pgsql-data:
+  pgadmin-data:

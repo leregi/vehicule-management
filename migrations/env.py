@@ -13,6 +13,20 @@ from alembic import context
 config = context.config
 
 #from app.api.v1.models.test_mod import People, PeopleTeam, Team, Division, NationalCard
+from app.api.v1.models.additional_passenger import *
+from app.api.v1.models.department import *
+from app.api.v1.models.driver import *
+from app.api.v1.models.driver_licence import *
+from app.api.v1.models.employee import *
+from app.api.v1.models.end_trip_point import*
+from app.api.v1.models.licence import *
+from app.api.v1.models.request import *
+from app.api.v1.models.request_trip_point import *
+from app.api.v1.models.starting_trip_point import *
+from app.api.v1.models.trip import *
+from app.api.v1.models.trip_rating import *
+from app.api.v1.models.vehicule import *
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

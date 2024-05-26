@@ -4,19 +4,14 @@ from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 from decimal import Decimal
 
-from .licence import Licence
-from .driver_licence import DriverLicence
 from .trip import Trip
 
-class Driver(SQLModel,table=True):
+class EndTripPoint(SQLModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
-    firstname:str
-    lastname: str
-    email:str = Field(unique=True)
-    password:str
-    telephone:str
-    licences: List[Licence] = Relationship(back_populates="drivers",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=DriverLicence)
-    trips: List[Trip] = Relationship(back_populates="driver",sa_relationship_kwargs={'lazy': 'selectin'})
+    latitude:Decimal = Field(default=0, max_digits=8, decimal_places=6)
+    longitude:Decimal= Field(default=0, max_digits=9, decimal_places=6)
+    trip_id:Optional[int] = Field(default=None,foreign_key="trip.id", unique=True)
+    trip_end_point: Optional[Trip] = Relationship(back_populates="end_trip_point", sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -30,3 +25,4 @@ class Driver(SQLModel,table=True):
             DateTime(timezone=True), onupdate=func.now(), nullable=True
         )
     )
+
