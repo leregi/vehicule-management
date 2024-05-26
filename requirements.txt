@@ -7,4 +7,5 @@ sqlalchemy
 psycopg2
 asyncpg
 python-dotenv
-
+uvloop
+httptools
