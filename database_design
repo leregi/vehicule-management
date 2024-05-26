@@ -20,7 +20,7 @@ Table Department {
 }
 
 
-Table Vehicle {
+Table Vehicule {
   id integer [primary key]
   mark varchar
   model varchar
@@ -34,12 +34,17 @@ Table Vehicle {
 }
 Table Licenses {
   id integer [primary key]
-  driver_id integer [ref: > Drivers.id]
   licence_number varchar
-  licence_id varchar
+  //licence_id varchar
   licence_exp_date date
   created_at timestamp
 
+}
+
+Table DriversLicences{
+  id integer [primary key]
+  driver_id integer [ref: > Drivers.id]
+  licence_id integer [ref: > Licenses.id]
 }
 
 Table Drivers   {
@@ -49,13 +54,12 @@ Table Drivers   {
   email varchar
   password varchar
   telephone varchar
-  licence_id integer [ref: > Licenses.id]
   created_at timestamp
 }
 
 Table Request {
   id integer [primary key]
-  requester_id integer [ref: > Employee.id]
+  //requester_id integer [ref: > Employee.id]
   is_requester_passenger boolean
   trip_date date
   trip_title varchar
@@ -68,7 +72,7 @@ Table Request {
 }
 
 Table AdditionalPassenger {
-  id integer [primary key]
+  //id integer [primary key]
   request_id integer [ref: > Request.id]
   employee_id integer [ref: > Employee.id]
 }
@@ -87,10 +91,11 @@ Table Trip {
   id integer [primary key]
   request_id integer [ref: > Request.id]
   driver_id integer [ref: > Drivers.id]
+  vehicule_id integer [ref: > Vehicule.id]
   start_time timestamp
   finish_time timestamp
-  start_point_id integer [ref: > TripPoint.id]
-  finish_point_id integer [ref: > TripPoint.id]
+  //start_point_id integer [ref: > TripPoint.id]
+  //finish_point_id integer [ref: > TripPoint.id]
   start_odometer_km decimal
   finish_odometer_km decimal
   distance_traveled_km decimal
@@ -99,17 +104,24 @@ Table Trip {
   created_at timestamp
 }
 
-Table TripPoint {
+Table StartingTripPoint {
   id integer [primary key]
+  trip_id integer [ref: - Trip.id]
   latitude decimal
   longitude decimal
 }
 
+Table EndTripPoint {
+  id integer [primary key]
+  trip_id integer [ref: - Trip.id]
+  latitude decimal
+  longitude decimal
+}
 
 Table TripRating {
   id integer [primary key]
   trip_id integer [ref: > Trip.id]
-  passenger_id integer [ref: > Employee.id]
+  employee_id integer [ref: > Employee.id]
   rating integer 
   testimony text
   created_at timestamp

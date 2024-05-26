@@ -1,6 +1,10 @@
-fastapi 
+fastapi[all]
 uvicorn
-pydantic
+pydantic[all]
 alembic
 sqlmodel
 sqlalchemy
+psycopg2
+asyncpg
+python-dotenv
+
