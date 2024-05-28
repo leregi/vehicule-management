@@ -1,4 +1,4 @@
-from sqlmodel.ext.asyncio.session import AsyncSession
+""" from sqlmodel.ext.asyncio.session import AsyncSession
 from ..models.test_mod import People, Division, NationalCard, Team
 from ..schemas.test_schemas import DeleteItem
 from  sqlmodel import select
@@ -126,3 +126,4 @@ class TestRepository():
         
 
 
+ """

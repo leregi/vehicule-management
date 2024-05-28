@@ -1,28 +1,20 @@
 from sqlmodel import Field, SQLModel, Relationship
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Optional,List, Callable
 from sqlalchemy import func, Column, DateTime
 from sqlalchemy.dialects.postgresql import TEXT
 from sqlalchemy.dialects.postgresql import INTERVAL
+from decimal import Decimal
 
 
-from importlib import import_module
 
-# from .request import Request as Request
-# from .additional_passenger import AdditionalPassenger as AdditionalPassenger
-# from .trip_rating import TripRating as TripRating
-# from .request_trip_point import RequestTripPoint as RequestTripPoint
-from .linked_tables import  DriverLicence
-# from .vehicule import Trip as Trip
+from .linked_tables import  DriverLicence, AdditionalPassenger
 
-# from .employee import Departement  
-#emp = import_module("./employee")
-#Employee = emp.Employee
 class Departement(SQLModel, table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
     department_name:str = Field(unique=True)
     # Departement has many employee
-    employees:List[Employee] = Relationship(back_populates="departement",sa_relationship_kwargs={'lazy': 'selectin'})
+    employees:List["Employee"] = Relationship(back_populates="departement",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -45,8 +37,8 @@ class Employee(SQLModel, table=True):
     email:str = Field(unique=True)
     department_id: Optional[int] = Field(default=None,foreign_key="departement.id")
     department:Optional[Departement] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'})
-    trip_ratings:List[TripRating] = Relationship(back_populates="employee",sa_relationship_kwargs={'lazy': 'selectin'})
-    requests:List[Request] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=AdditionalPassenger)
+    trip_ratings:List['TripRating'] = Relationship(back_populates="employee",sa_relationship_kwargs={'lazy': 'selectin'})
+    requests:List['Request'] = Relationship(back_populates="employees",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=AdditionalPassenger)
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -77,8 +69,8 @@ class Request(SQLModel, table=True):
     #employee_id: Optional[int] = Field(default=None,foreign_key="employee.id")
     #employee:Optional[Employee] = Relationship(back_populates="requests",sa_relationship_kwargs={'lazy': 'selectin'})
     employees:List[Employee] = Relationship(back_populates="requests",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=AdditionalPassenger)
-    request_trip_points:list[RequestTripPoint] = Relationship(back_populates="request",sa_relationship_kwargs={'lazy': 'selectin'})
-    trips:List[Trip] = Relationship(back_populates="request",sa_relationship_kwargs={'lazy': 'selectin'})
+    request_trip_points:list["RequestTripPoint"] = Relationship(back_populates="request",sa_relationship_kwargs={'lazy': 'selectin'})
+    trips:List["Trip"] = Relationship(back_populates="request",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -104,7 +96,7 @@ class Vehicule(SQLModel,table=True):
     insurance_exp_date:datetime
     vignette_exp_date:datetime
     immatriculation_number:str = Field(unique=True)
-    trips:List[Trip] = Relationship(back_populates="vehicule",sa_relationship_kwargs={'lazy': 'selectin'})
+    trips:List["Trip"] = Relationship(back_populates="vehicule",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -126,7 +118,7 @@ class RequestTripPoint(SQLModel,table=True):
     latitude:Decimal = Field(default=0, max_digits=8, decimal_places=6)
     longitude:Decimal= Field(default=0, max_digits=9, decimal_places=6)
     request_id: Optional[int] = Field(default=None,foreign_key="request.id")
-    request:Optional[Request] = Relationship(back_populates="request_trip_points",sa_relationship_kwargs={'lazy': 'selectin'})
+    request:Optional["Request"] = Relationship(back_populates="request_trip_points",sa_relationship_kwargs={'lazy': 'selectin'})
     
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
@@ -149,7 +141,7 @@ class StartingTripPoint(SQLModel,table=True):
     latitude:Decimal = Field(default=0, max_digits=8, decimal_places=6)
     longitude:Decimal= Field(default=0, max_digits=9, decimal_places=6)
     trip_id:Optional[int] = Field(default=None,foreign_key="trip.id", unique=True)
-    trip_starting_point: Optional[Trip] = Relationship(back_populates="starting_trip_point", sa_relationship_kwargs={'lazy': 'selectin'})
+    trip_starting_point: Optional["Trip"] = Relationship(back_populates="starting_trip_point", sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -170,7 +162,7 @@ class EndTripPoint(SQLModel,table=True):
     latitude:Decimal = Field(default=0, max_digits=8, decimal_places=6)
     longitude:Decimal= Field(default=0, max_digits=9, decimal_places=6)
     trip_id:Optional[int] = Field(default=None,foreign_key="trip.id", unique=True)
-    trip_end_point: Optional[Trip] = Relationship(back_populates="end_trip_point", sa_relationship_kwargs={'lazy': 'selectin'})
+    trip_end_point: Optional["Trip"] = Relationship(back_populates="end_trip_point", sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(
@@ -201,8 +193,8 @@ class Trip(SQLModel,table=True):
     request_id: Optional[int] = Field(default=None,foreign_key="request.id")
     request:Optional[Request] = Relationship(back_populates="trips",sa_relationship_kwargs={'lazy': 'selectin'})
     driver_id: Optional[int] = Field(default=None,foreign_key="driver.id")
-    driver:Optional[Driver] = Relationship(back_populates="trips",sa_relationship_kwargs={'lazy': 'selectin'})
-    trip_ratings:List[TripRating] = Relationship(back_populates="trip",sa_relationship_kwargs={'lazy': 'selectin'})
+    driver:Optional["Driver"] = Relationship(back_populates="trips",sa_relationship_kwargs={'lazy': 'selectin'})
+    trip_ratings:List["TripRating"] = Relationship(back_populates="trip",sa_relationship_kwargs={'lazy': 'selectin'})
     starting_trip_point:Optional[StartingTripPoint] = Relationship(
         sa_relationship_kwargs={
             'uselist': False,
@@ -258,7 +250,30 @@ class Licence(SQLModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
     licence_number: str
     licence_exp_date: datetime
-    drivers: List[Driver] = Relationship(back_populates="licences",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=DriverLicence)
+    drivers: List["Driver"] = Relationship(back_populates="licences",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=DriverLicence)
+    created_at:datetime = Field(
+        #default_factory=datetime.now(tz=timezone.utc)
+         sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        )
+    )
+    updated_at:Optional[datetime] = Field(
+        default=None,
+        #sa_column_kwargs={"onupdate": datetime.now(tz=timezone.utc)}
+        sa_column=Column(
+            DateTime(timezone=True), onupdate=func.now(), nullable=True
+        )
+    )
+
+class Driver(SQLModel,table=True):
+    id:Optional[int] = Field(default=None,primary_key=True)
+    firstname:str
+    lastname: str
+    email:str = Field(unique=True)
+    password:str
+    telephone:str
+    licences: List[Licence] = Relationship(back_populates="drivers",sa_relationship_kwargs={'lazy': 'selectin'}, link_model=DriverLicence)
+    trips: List[Trip] = Relationship(back_populates="driver",sa_relationship_kwargs={'lazy': 'selectin'})
     created_at:datetime = Field(
         #default_factory=datetime.now(tz=timezone.utc)
          sa_column=Column(

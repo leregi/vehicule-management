@@ -21,8 +21,9 @@ app = FastAPI(
     title= settings.project_title,
     description=settings.project_description,
     version=settings.project_version,
-    lifespan=lifespan
+    #lifespan=lifespan
 )
+
 
 
 @app.get("/", 
@@ -33,5 +34,5 @@ def read_root():
     return BasicResponse(message="Home")
 
 
-app.include_router(v1_router, prefix=settings.API_V1_STR)
+#app.include_router(v1_router, prefix=settings.API_V1_STR)
 

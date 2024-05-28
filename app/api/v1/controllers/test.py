@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+""" from fastapi import APIRouter, HTTPException, status, Depends
 from typing import Union, List
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -139,3 +139,4 @@ async def add_test(people_teams:PeopleSchema, session:AsyncSession = Depends(get
     if not registered_people_teams:
             raise HTTPException(status_code=400, detail="bad request on the DB action")
     return registered_people_teams
+ """
