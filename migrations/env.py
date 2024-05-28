@@ -26,7 +26,7 @@ from app.api.v1.models.licence import *
 # from app.api.v1.models.request_trip_point import *
 # from app.api.v1.models.starting_trip_point import *
 # from app.api.v1.models.trip import *
-from app.api.v1.models.trip_rating import *
+#from app.api.v1.models.trip_rating import *
 # from app.api.v1.models.vehicule import *
 
 
