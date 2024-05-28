@@ -21,7 +21,7 @@ from app.api.v1.models.tables import *
 # from app.api.v1.models.driver_licence import *
 # from app.api.v1.models.employee import *
 # from app.api.v1.models.end_trip_point import*
-from app.api.v1.models.licence import *
+#from app.api.v1.models.licence import *
 # from app.api.v1.models.request import *
 # from app.api.v1.models.request_trip_point import *
 # from app.api.v1.models.starting_trip_point import *
