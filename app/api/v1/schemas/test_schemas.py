@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel
+""" from sqlmodel import SQLModel
 from pydantic import EmailStr, ConfigDict
 from typing import List, Optional
 
@@ -51,3 +51,4 @@ class DeleteItem(SQLModel):
     ok: bool = True
     content: str
 
+ """

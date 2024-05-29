@@ -1,7 +1,7 @@
 services:
   database:
     image: postgres
-    restart: always
+    #restart: always
     ports:
       - 5432:5432
     env_file:
@@ -18,7 +18,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    restart: always
+    #restart: always
     depends_on:
       - database
     environment:
@@ -38,7 +38,7 @@ services:
       - database
     ports:
       - "80:80"
-    restart: always
+    #restart: always
     volumes:
       - ./:/usr/src/app
     env_file:
