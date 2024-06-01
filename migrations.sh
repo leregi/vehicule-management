@@ -8,11 +8,11 @@ set -x
 
 # run first migration
 #docker-compose exec web 
-alembic revision --autogenerate -m "init"
+#alembic revision --autogenerate -m "init"
 
 # run migrations upword
 #docker-compose exec web 
-alembic upgrade head
+#alembic upgrade head
 
 # run migrations backword
 #
