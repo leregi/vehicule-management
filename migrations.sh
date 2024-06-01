@@ -12,7 +12,7 @@ set -x
 
 # run migrations upword
 #docker-compose exec web 
-#alembic upgrade head
+alembic upgrade head
 
 # run migrations backword
 #
