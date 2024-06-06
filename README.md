@@ -2,18 +2,11 @@
 
 ---
 
-## start the server with
+## start server and eventual migrations
 
-> `docker compose up --build`
+1. build_&_run.sh
+2. run.sh
 
-## drop server with
+## stop
 
-> `docker compose down`
-
-## server openapi docs is in
-
-> `localhost:/docs`
-
-## db client
-
-pdAdmin will be available at http://localhost:5011/login.
+3. stop.sh
