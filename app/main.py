@@ -34,5 +34,5 @@ def read_root():
     return BasicResponse(message="Home")
 
 
-#app.include_router(v1_router, prefix=settings.API_V1_STR)
+app.include_router(v1_router, prefix=settings.API_V1_STR)
 
