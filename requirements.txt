@@ -10,3 +10,4 @@ asyncpg
 python-dotenv
 uvloop
 httptools
+icecream
